@@ -608,7 +608,7 @@ histsave(lno, cmd, dowrite)
 	const char *cmd;
 	int dowrite;	/* ignored (compatibility with COMPLEX_HISTORY) */
 {
-	register char **hp = histptr;
+	char **hp = histptr;
 	char *cp;
 
 	if (++hp >= history + histsize) { /* remove oldest command */
@@ -728,8 +728,8 @@ hist_finish()
 {
   static int once;
   FILE *fh;
-  register int i;
-  register char **hp;
+  int i;
+  char **hp;
 
   if (once++)
     return;
@@ -767,7 +767,7 @@ histsave(lno, cmd, dowrite)
 	const char *cmd;
 	int dowrite;
 {
-	register char **hp;
+	char **hp;
 	char *c, *cp;
 
 	c = str_save(cmd, APERM);
@@ -892,11 +892,11 @@ typedef enum state {
 
 static int
 hist_count_lines(base, bytes)
-	register unsigned char *base;
-	register int bytes;
+	unsigned char *base;
+	int bytes;
 {
 	State state = shdr;
-	register lines = 0;
+	lines = 0;
 
 	while (bytes--) {
 		switch (state)
@@ -985,8 +985,8 @@ hist_skip_back(base, bytes, no)
 	int *bytes;
 	int no;
 {
-	register int lines = 0;
-	register unsigned char *ep;
+	int lines = 0;
+	unsigned char *ep;
 
 	for (ep = base + *bytes; --ep > base; ) {
 		/* this doesn't really work: the 4 byte line number that is
@@ -1011,8 +1011,8 @@ hist_skip_back(base, bytes, no)
 static void
 histload(s, base, bytes)
 	Source *s;
-	register unsigned char *base;
-	register int bytes;
+	unsigned char *base;
+	int bytes;
 {
 	State state;
 	int	lno;
@@ -1067,7 +1067,7 @@ histinsert(s, lno, line)
 	int lno;
 	unsigned char *line;
 {
-	register char **hp;
+	char **hp;
 
 	if (lno >= s->line-(histptr-history) && lno <= s->line) {
 		hp = &histptr[lno-s->line];

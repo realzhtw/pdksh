@@ -1772,9 +1772,9 @@ static int outofwin()
 
 static void rewindow()
 {
-	register int	tcur, tcol;
-	int		holdcur1, holdcol1;
-	int		holdcur2, holdcol2;
+	int	tcur, tcol;
+	int	holdcur1, holdcol1;
+	int	holdcur2, holdcol2;
 
 	holdcur1 = holdcur2 = tcur = 0;
 	holdcol1 = holdcol2 = tcol = 0;

@@ -37,7 +37,7 @@ static void     mprintit    (mbox_t *mbp);
 void
 mcheck()
 {
-	register mbox_t	*mbp;
+	mbox_t	*mbp;
 	time_t		 now;
 	struct tbl	*vp;
 	struct stat	 stbuf;
@@ -85,9 +85,7 @@ mcset(interval)
 	mailcheck_interval = interval;
 }
 
-void
-mbset(p)
-	register char	*p;
+void mbset(char *p)
 {
 	struct stat	stbuf;
 
@@ -104,12 +102,10 @@ mbset(p)
 		mbox.mb_mtime = 0;
 }
 
-void
-mpset(mptoparse)
-	register char	*mptoparse;
+void mpset(char *mptoparse)
 {
-	register mbox_t	*mbp;
-	register char	*mpath, *mmsg, *mval;
+	mbox_t	*mbp;
+	char	*mpath, *mmsg, *mval;
 	char *p;
 
 	munset( mplist );
@@ -146,9 +142,9 @@ mpset(mptoparse)
 
 static void
 munset(mlist)
-register mbox_t	*mlist;
+mbox_t	*mlist;
 {
-	register mbox_t	*mbp;
+	mbox_t	*mbp;
 
 	while (mlist != NULL) {
 		mbp = mlist;
@@ -165,7 +161,7 @@ mballoc(p, m)
 	char	*m;
 {
 	struct stat	stbuf;
-	register mbox_t	*mbp;
+	mbox_t	*mbp;
 
 	mbp = (mbox_t *)alloc(sizeof(mbox_t), APERM);
 	mbp->mb_next = NULL;
