@@ -28,7 +28,7 @@ struct edstate {
 static int	vi_hook	(int ch);
 static void 	vi_reset (char *buf, size_t len);
 static int	nextstate (int ch);
-static int	vi_insert (int ch)
+static int	vi_insert (int ch);
 static int	vi_cmd (int argcnt, const char *cmd);
 static int	domove (int argcnt, const char *cmd, int sub);
 static int	redo_insert (int count);

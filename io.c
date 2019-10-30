@@ -2,9 +2,10 @@
  * shell buffered IO and formatted output
  */
 
-#include <ctype.h>
 #include "sh.h"
 #include "ksh_stat.h"
+#include <ctype.h>
+#include <stdarg.h>
 
 static int initio_done;
 

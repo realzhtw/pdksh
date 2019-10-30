@@ -4,6 +4,8 @@
 
 #include "sh.h"
 
+#include <stdarg.h>
+
 #define INDENT	4
 
 #define tputc(c, shf)	shf_putchar(c, shf);

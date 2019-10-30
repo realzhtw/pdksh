@@ -4,6 +4,7 @@
 
 #include "sh.h"
 #include <ctype.h>
+#include <stdarg.h>
 
 
 /* Structure to keep track of the lexing state and the various pieces of info
