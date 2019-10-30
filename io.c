@@ -14,14 +14,7 @@ static int initio_done;
 
 
 /* A shell error occured (eg, syntax error, etc.) */
-void
-#ifdef HAVE_PROTOTYPES
-errorf(const char *fmt, ...)
-#else
-errorf(fmt, va_alist)
-	const char *fmt;
-	va_dcl
-#endif
+void errorf(const char *fmt, ...)
 {
 	va_list va;
 
@@ -29,7 +22,7 @@ errorf(fmt, va_alist)
 	exstat = 1;
 	if (*fmt) {
 		error_prefix(TRUE);
-		SH_VA_START(va, fmt);
+		va_start(va, fmt);
 		shf_vfprintf(shl_out, fmt, va);
 		va_end(va);
 		shf_putchar('\n', shl_out);
@@ -39,20 +32,12 @@ errorf(fmt, va_alist)
 }
 
 /* like errorf(), but no unwind is done */
-void
-#ifdef HAVE_PROTOTYPES
-warningf(int fileline, const char *fmt, ...)
-#else
-warningf(fileline, fmt, va_alist)
-	int fileline;
-	const char *fmt;
-	va_dcl
-#endif
+void warningf(int fileline, const char *fmt, ...)
 {
 	va_list va;
 
 	error_prefix(fileline);
-	SH_VA_START(va, fmt);
+	va_start(va, fmt);
 	shf_vfprintf(shl_out, fmt, va);
 	va_end(va);
 	shf_putchar('\n', shl_out);
@@ -62,14 +47,7 @@ warningf(fileline, fmt, va_alist)
 /* Used by built-in utilities to prefix shell and utility name to message
  * (also unwinds environments for special builtins).
  */
-void
-#ifdef HAVE_PROTOTYPES
-bi_errorf(const char *fmt, ...)
-#else
-bi_errorf(fmt, va_alist)
-	const char *fmt;
-	va_dcl
-#endif
+void bi_errorf(const char *fmt, ...)
 {
 	va_list va;
 
@@ -80,7 +58,7 @@ bi_errorf(fmt, va_alist)
 		/* not set when main() calls parse_args() */
 		if (builtin_argv0)
 			shf_fprintf(shl_out, "%s: ", builtin_argv0);
-		SH_VA_START(va, fmt);
+		va_start(va, fmt);
 		shf_vfprintf(shl_out, fmt, va);
 		va_end(va);
 		shf_putchar('\n', shl_out);
@@ -99,21 +77,13 @@ bi_errorf(fmt, va_alist)
 }
 
 /* Called when something that shouldn't happen does */
-void
-#ifdef HAVE_PROTOTYPES
-internal_errorf(int jump, const char *fmt, ...)
-#else
-internal_errorf(jump, fmt, va_alist)
-	int jump;
-	const char *fmt;
-	va_dcl
-#endif
+void internal_errorf(int jump, const char *fmt, ...)
 {
 	va_list va;
 
 	error_prefix(TRUE);
 	shf_fprintf(shl_out, "internal error: ");
-	SH_VA_START(va, fmt);
+	va_start(va, fmt);
 	shf_vfprintf(shl_out, fmt, va);
 	va_end(va);
 	shf_putchar('\n', shl_out);
@@ -139,40 +109,26 @@ error_prefix(fileline)
 }
 
 /* printf to shl_out (stderr) with flush */
-void
-#ifdef HAVE_PROTOTYPES
-shellf(const char *fmt, ...)
-#else
-shellf(fmt, va_alist)
-	const char *fmt;
-	va_dcl
-#endif
+void shellf(const char *fmt, ...)
 {
 	va_list va;
 
 	if (!initio_done) /* shl_out may not be set up yet... */
 		return;
-	SH_VA_START(va, fmt);
+	va_start(va, fmt);
 	shf_vfprintf(shl_out, fmt, va);
 	va_end(va);
 	shf_flush(shl_out);
 }
 
 /* printf to shl_stdout (stdout) */
-void
-#ifdef HAVE_PROTOTYPES
-shprintf(const char *fmt, ...)
-#else
-shprintf(fmt, va_alist)
-	const char *fmt;
-	va_dcl
-#endif
+void shprintf(const char *fmt, ...)
 {
 	va_list va;
 
 	if (!shl_stdout_ok)
 		internal_errorf(1, "shl_stdout not valid");
-	SH_VA_START(va, fmt);
+	va_start(va, fmt);
 	shf_vfprintf(shl_stdout, fmt, va);
 	va_end(va);
 }
@@ -195,20 +151,13 @@ kshdebug_init_()
 }
 
 /* print to debugging log */
-void
-# ifdef HAVE_PROTOTYPES
-kshdebug_printf_(const char *fmt, ...)
-# else
-kshdebug_printf_(fmt, va_alist)
-	const char *fmt;
-	va_dcl
-# endif
+void kshdebug_printf_(const char *fmt, ...)
 {
 	va_list va;
 
 	if (!kshdebug_shf)
 		return;
-	SH_VA_START(va, fmt);
+	va_start(va, fmt);
 	shf_fprintf(kshdebug_shf, "[%d] ", getpid());
 	shf_vfprintf(kshdebug_shf, fmt, va);
 	va_end(va);

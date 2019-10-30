@@ -836,14 +836,7 @@ readhere(iop)
 		ignore_backslash_newline--;
 }
 
-void
-#ifdef HAVE_PROTOTYPES
-yyerror(const char *fmt, ...)
-#else
-yyerror(fmt, va_alist)
-	const char *fmt;
-	va_dcl
-#endif
+void yyerror(const char *fmt, ...)
 {
 	va_list va;
 
@@ -853,7 +846,7 @@ yyerror(fmt, va_alist)
 	source->str = null;	/* zap pending input */
 
 	error_prefix(TRUE);
-	SH_VA_START(va, fmt);
+	va_start(va, fmt);
 	shf_vfprintf(shl_out, fmt, va);
 	va_end(va);
 	errorf(null);
