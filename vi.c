@@ -1731,9 +1731,7 @@ grabsearch(save, start, fwd, pat)
 	return hist;
 }
 
-static void
-redraw_line(newline)
-	int newline;
+static void redraw_line(int newline)
 {
 	(void) memset(wbuf[win], ' ', wbuf_len);
 	if (newline) {
@@ -1745,9 +1743,7 @@ redraw_line(newline)
 	morec = ' ';
 }
 
-static void
-refresh(leftside)
-	int		leftside;
+static void refresh(int leftside)
 {
 	if (leftside < 0)
 		leftside = lastref;
@@ -1759,8 +1755,7 @@ refresh(leftside)
 	win = 1 - win;
 }
 
-static int
-outofwin()
+static int outofwin()
 {
 	int	cur, col;
 
@@ -1775,8 +1770,7 @@ outofwin()
 	return 0;
 }
 
-static void
-rewindow()
+static void rewindow()
 {
 	register int	tcur, tcol;
 	int		holdcur1, holdcol1;
@@ -1799,19 +1793,14 @@ rewindow()
 	es->winleft = holdcur1;
 }
 
-static int
-newcol(ch, col)
-	int	ch, col;
+static int newcol(int ch, int col)
 {
 	if (ch == '\t')
 		return (col | 7) + 1;
 	return col + char_len(ch);
 }
 
-static void
-display(wb1, wb2, leftside)
-	char	*wb1, *wb2;
-	int	leftside;
+static void display(char *wb1, char *wb2, int leftside)
 {
 	unsigned char ch;
 	char	*twb1, *twb2, mc;
