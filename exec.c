@@ -14,25 +14,25 @@
 # define PS4_SUBSTITUTE(s)	(s)
 #endif /* KSH */
 
-static int	comexec	 ARGS((struct op *t, struct tbl *volatile tp, char **ap,
-			      int volatile flags));
-static void	scriptexec ARGS((struct op *tp, char **ap));
-static int	call_builtin ARGS((struct tbl *tp, char **wp));
-static int	iosetup ARGS((struct ioword *iop, struct tbl *tp));
-static int	herein ARGS((const char *content, int sub));
+static int	comexec	 (struct op *t, struct tbl *volatile tp, char **ap,
+			      int volatile flags);
+static void	scriptexec (struct op *tp, char **ap);
+static int	call_builtin (struct tbl *tp, char **wp);
+static int	iosetup (struct ioword *iop, struct tbl *tp);
+static int	herein (const char *content, int sub);
 #ifdef KSH
-static char 	*do_selectargs ARGS((char **ap, bool_t print_menu));
+static char 	*do_selectargs (char **ap, bool_t print_menu);
 #endif /* KSH */
 #ifdef KSH
-static int	dbteste_isa ARGS((Test_env *te, Test_meta meta));
-static const char *dbteste_getopnd ARGS((Test_env *te, Test_op op,
-					 int do_eval));
-static int	dbteste_eval ARGS((Test_env *te, Test_op op, const char *opnd1,
-				const char *opnd2, int do_eval));
-static void	dbteste_error ARGS((Test_env *te, int offset, const char *msg));
+static int	dbteste_isa (Test_env *te, Test_meta meta);
+static const char *dbteste_getopnd (Test_env *te, Test_op op,
+					 int do_eval);
+static int	dbteste_eval (Test_env *te, Test_op op, const char *opnd1,
+				const char *opnd2, int do_eval);
+static void	dbteste_error (Test_env *te, int offset, const char *msg);
 #endif /* KSH */
 #ifdef OS2
-static int	search_access1 ARGS((const char *path, int mode, int *errnop));
+static int	search_access1 (const char *path, int mode, int *errnop);
 #endif /* OS2 */
 
 
@@ -946,7 +946,7 @@ define(name, t)
 void
 builtin(name, func)
 	const char *name;
-	int (*func) ARGS((char **));
+	int (*func) (char **);
 {
 	register struct tbl *tp;
 	Tflag flag;
@@ -1526,7 +1526,7 @@ struct select_menu_info {
 	int	num_width;
 } info;
 
-static char *select_fmt_entry ARGS((void *arg, int i, char *buf, int buflen));
+static char *select_fmt_entry (void *arg, int i, char *buf, int buflen);
 
 /* format a single select menu item */
 static char *

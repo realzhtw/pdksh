@@ -14,10 +14,10 @@
 
 short ctypes [UCHAR_MAX+1];	/* type bits for unsigned char */
 
-static int	do_gmatch ARGS((const unsigned char *s, const unsigned char *p,
+static int	do_gmatch (const unsigned char *s, const unsigned char *p,
 			const unsigned char *se, const unsigned char *pe,
-			int isfile));
-static const unsigned char *cclass ARGS((const unsigned char *p, int sub));
+			int isfile);
+static const unsigned char *cclass (const unsigned char *p, int sub);
 
 /*
  * Fast character classes
@@ -200,8 +200,8 @@ struct options_info {
 	} opts[NELEM(options)];
 };
 
-static char *options_fmt_entry ARGS((void *arg, int i, char *buf, int buflen));
-static void printoptions ARGS((int verbose));
+static char *options_fmt_entry (void *arg, int i, char *buf, int buflen);
+static void printoptions (int verbose);
 
 /* format a single select menu item */
 static char *
@@ -815,13 +815,13 @@ pat_scan(p, pe, match_sep)
 /*
  * quick sort of array of generic pointers to objects.
  */
-static void qsort1 ARGS((void **base, void **lim, int (*f)(void *, void *)));
+static void qsort1 (void **base, void **lim, int (*f)(void *, void *));
 
 void
 qsortp(base, n, f)
 	void **base;				/* base address */
 	size_t n;				/* elements */
-	int (*f) ARGS((void *, void *));	/* compare function */
+	int (*f) (void *, void *);	/* compare function */
 {
 	qsort1(base, base + n, f);
 }
@@ -836,7 +836,7 @@ qsortp(base, n, f)
 static void
 qsort1(base, lim, f)
 	void **base, **lim;
-	int (*f) ARGS((void *, void *));
+	int (*f) (void *, void *);
 {
 	register void **i, **j;
 	register void **lptr, **hptr;
@@ -1091,7 +1091,7 @@ void
 print_columns(shf, n, func, arg, max_width)
 	struct shf *shf;
 	int n;
-	char *(*func) ARGS((void *, int, char *, int));
+	char *(*func) (void *, int, char *, int);
 	void *arg;
 	int max_width;
 {
@@ -1310,7 +1310,7 @@ ksh_get_wd(buf, bsize)
 
 	return ret;
 #else /* HAVE_GETCWD */
-	extern char *getwd ARGS((char *));
+	extern char *getwd (char *);
 	char *b;
 	int len;
 

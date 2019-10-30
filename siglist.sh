@@ -7,6 +7,8 @@
 
 set -e
 
+set -x
+
 in=tmpi$$.c
 out=tmpo$$.c
 ecode=1

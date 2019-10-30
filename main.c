@@ -14,9 +14,9 @@ extern char **environ;
  * global data
  */
 
-static void	reclaim ARGS((void));
-static void	remove_temps ARGS((struct temp *tp));
-static int	is_restricted ARGS((char *name));
+static void	reclaim (void);
+static void	remove_temps (struct temp *tp);
+static int	is_restricted (char *name);
 
 /*
  * shell initialization

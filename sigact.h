@@ -54,7 +54,7 @@
 #endif
 
 #ifndef IS_KSH
-handler_t Signal	ARGS((int sig, handler_t disp));
+handler_t Signal	(int sig, handler_t disp);
 #endif /* IS_KSH */
 
 /*
@@ -105,19 +105,19 @@ struct sigaction
 };
 
 
-int	sigaction	ARGS(( int sig, struct sigaction *act, struct sigaction *oact ));
-int	sigaddset	ARGS(( sigset_t *mask, int sig ));
+int	sigaction	( int sig, struct sigaction *act, struct sigaction *oact );
+int	sigaddset	( sigset_t *mask, int sig );
 #ifndef IS_KSH
-int	sigdelset	ARGS(( sigset_t *mask, int sig ));
+int	sigdelset	( sigset_t *mask, int sig );
 #endif /* IS_KSH */
-int	sigemptyset	ARGS(( sigset_t *mask ));
+int	sigemptyset	( sigset_t *mask );
 #ifndef IS_KSH
-int	sigfillset	ARGS(( sigset_t *mask ));
-int	sigismember	ARGS(( sigset_t *mask, int sig ));
-int	sigpending	ARGS(( sigset_t *set ));
+int	sigfillset	( sigset_t *mask );
+int	sigismember	( sigset_t *mask, int sig );
+int	sigpending	( sigset_t *set );
 #endif /* IS_KSH */
-int	sigprocmask	ARGS(( int how, sigset_t *set, sigset_t *oset ));
-int	sigsuspend	ARGS(( sigset_t *mask ));
+int	sigprocmask	( int how, sigset_t *set, sigset_t *oset );
+int	sigsuspend	( sigset_t *mask );
 	
 #ifndef sigmask
 # define sigmask(s)	(1<<((s)-1))	/* convert SIGnum to mask */

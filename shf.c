@@ -6,6 +6,8 @@
 #include "ksh_stat.h"
 #include "ksh_limval.h"
 
+#include <stdarg.h>
+
 
 /* flags to shf_emptybuf() */
 #define EB_READSW	0x01	/* about to switch to reading */
@@ -17,8 +19,8 @@
  * file descriptors.
  */
 
-static int	shf_fillbuf	ARGS((struct shf *shf));
-static int	shf_emptybuf	ARGS((struct shf *shf, int flags));
+static int	shf_fillbuf	(struct shf *shf);
+static int	shf_emptybuf	(struct shf *shf, int flags);
 
 /* Open a file.  First three args are for open(), last arg is flags for
  * this package.  Returns NULL if file could not be opened, or if a dup

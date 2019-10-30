@@ -122,8 +122,8 @@ struct Block {
 
 static Block aempty = {&aempty, &aempty, aempty.cell, aempty.cell};
 
-static void ablockfree ARGS((Block *bp, Area *ap));
-static void *asplit ARGS((Area *ap, Block *bp, Cell *fp, Cell *fpp, int cells));
+static void ablockfree (Block *bp, Area *ap);
+static void *asplit (Area *ap, Block *bp, Cell *fp, Cell *fpp, int cells);
 
 /* create empty Area */
 Area *

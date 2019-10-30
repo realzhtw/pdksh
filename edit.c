@@ -20,17 +20,17 @@
 
 
 #if defined(TIOCGWINSZ)
-static RETSIGTYPE x_sigwinch ARGS((int sig));
+static RETSIGTYPE x_sigwinch (int sig);
 static int got_sigwinch;
-static void check_sigwinch ARGS((void));
+static void check_sigwinch (void);
 #endif /* TIOCGWINSZ */
 
-static int	x_file_glob ARGS((int flags, const char *str, int slen,
-				  char ***wordsp));
-static int	x_command_glob ARGS((int flags, const char *str, int slen,
-				     char ***wordsp));
-static int	x_locate_word ARGS((const char *buf, int buflen, int pos,
-				    int *startp, int *is_command));
+static int	x_file_glob (int flags, const char *str, int slen,
+				  char ***wordsp);
+static int	x_command_glob (int flags, const char *str, int slen,
+				     char ***wordsp);
+static int	x_locate_word (const char *buf, int buflen, int pos,
+				    int *startp, int *is_command);
 
 static char vdisable_c;
 
@@ -86,7 +86,7 @@ x_sigwinch(sig)
 }
 
 static void
-check_sigwinch ARGS((void))
+check_sigwinch (void)
 {
 	if (got_sigwinch) {
 		struct winsize ws;
@@ -451,10 +451,10 @@ x_do_comment(buf, bsize, lenp)
 /*           Common file/command completion code for vi/emacs	             */
 
 
-static char	*add_glob ARGS((const char *str, int slen));
-static void	glob_table ARGS((const char *pat, XPtrV *wp, struct table *tp));
-static void	glob_path ARGS((int flags, const char *pat, XPtrV *wp,
-				const char *path));
+static char	*add_glob (const char *str, int slen);
+static void	glob_table (const char *pat, XPtrV *wp, struct table *tp);
+static void	glob_path (int flags, const char *pat, XPtrV *wp,
+				const char *path);
 
 #if 0 /* not used... */
 int	x_complete_word ARGS((const char *str, int slen, int is_command,
