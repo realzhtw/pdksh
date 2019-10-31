@@ -65,10 +65,6 @@ TESTFILES = tests/README tests/th tests/th-sh tests/alias.t tests/arith.t \
 	tests/integer.t tests/lineno.t tests/read.t tests/regress.t \
 	tests/syntax.t tests/unclass1.t tests/unclass2.t \
 	tests/version.t 
-# OS2FILES also disted, but handled differently
-OS2FILES = os2/Makefile os2/config.h os2/config.status os2/configure.cmd \
-	os2/emacs.out os2/kshrc.ksh os2/make.sed os2/os2.c os2/os2siglist.out \
-	os2/README.os2 os2/NEWS.os2 os2/os2bugs os2/th.cmd os2/config.cache
 
 all: $(SHELL_PROG)$(exe_suffix) $(SHELL_PROG).1
 
@@ -174,7 +170,7 @@ distclean: clean
 
 realclean: distclean
 
-dist: $(DISTFILES) $(ETCFILES) $(MISCFILES) $(TESTFILES) $(OS2FILES)
+dist: $(DISTFILES) $(ETCFILES) $(MISCFILES) $(TESTFILES)
 	cd $(srcdir) && \
 	  { \
 	    ./new-version.sh; \
@@ -186,15 +182,12 @@ dist: $(DISTFILES) $(ETCFILES) $(MISCFILES) $(TESTFILES) $(OS2FILES)
 	    fi; \
 	    echo Creating version $$FNAME; \
 	    rm -rf $$FNAME; \
-	    mkdir $$FNAME $$FNAME/etc $$FNAME/misc $$FNAME/tests $$FNAME/os2; \
+	    mkdir $$FNAME $$FNAME/etc $$FNAME/misc $$FNAME/tests; \
 	    cp -p $(DISTFILES) $$FNAME; \
 	    cp -p $(ETCFILES) $$FNAME/etc; \
 	    cp -p $(MISCFILES) $$FNAME/misc; \
 	    cp -p $(TESTFILES) $$FNAME/tests; \
-	    cp -p $(OS2FILES) $$FNAME/os2; \
-	    ./emacs-gen.sh emacs.c > os2/emacs.out; \
 	    test -x ./Dist-fixup && ./Dist-fixup $$FNAME; \
-	    sed -f os2/make.sed < $$FNAME/Makefile.in > $$FNAME/os2/Makefile; \
 	    chmod -R a+rX,u+w,og-w $$FNAME; \
 	    tar chzf $$FNAME.tar.gz $$FNAME; \
 	    find $$FNAME -print | xargs pathchk -p; \
