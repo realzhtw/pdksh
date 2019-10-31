@@ -15,19 +15,7 @@
 # include <stddef.h>
 #endif
 
-#ifdef HAVE_STDLIB_H
-# include <stdlib.h>
-#else
-/* just a useful subset of what stdlib.h would have */
-extern char * getenv  (const char *);
-extern void * malloc  (size_t);
-extern void * realloc (void *, size_t);
-extern int    free    (void *);
-extern int    exit    (int);
-extern int    rand    (void);
-extern void   srand   (unsigned int);
-extern int    atoi    (const char *);
-#endif /* HAVE_STDLIB_H */
+#include <stdlib.h>
 
 #ifdef HAVE_UNISTD_H
 # include <unistd.h>

@@ -5,9 +5,7 @@
 #include "config.h"
 #include <stdio.h>
 #include <sys/types.h>
-#ifdef HAVE_STDLIB_H
-# include <stdlib.h>
-#endif /* HAVE_STDLIB_H */
+#include <stdlib.h>
 #ifdef HAVE_UNISTD_H
 # include <unistd.h>
 #endif /* HAVE_UNISTD_H */
@@ -24,10 +22,7 @@ char	*progname =	"check-fd";
 
 #define MAXFD	256	/* a somewhat arbitrary number */
 
-int
-main(argc, argv)
-	int argc;
-	char **argv;
+int main(int argc, char **argv)
 {
 	extern int	optind;
 
@@ -73,9 +68,7 @@ main(argc, argv)
 	return 0;
 }
 
-int
-usage(verbose)
-	int verbose;
+int usage(int verbose)
 {
 	fprintf(stderr, "Usage: %s [-?c]\n", progname);
 	if (verbose)

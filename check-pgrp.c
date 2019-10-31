@@ -3,10 +3,7 @@
 #include "config.h"
 #include <stdio.h>
 #include <sys/types.h>
-#ifdef HAVE_STDLIB_H
-# include <stdlib.h>
-#endif /* HAVE_STDLIB_H */
-#ifdef HAVE_UNISTD_H
+#include <stdlib.h>
 # include <unistd.h>
 #endif /* HAVE_UNISTD_H */
 #ifdef HAVE_FCNTL_H
