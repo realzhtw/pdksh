@@ -149,13 +149,8 @@ x_read(buf, len)
 
 /* tty I/O */
 
-int
-x_getc()
+int x_getc()
 {
-#ifdef OS2
-	unsigned char c = _read_kbd(0, 1, 0);
-	return c == 0 ? 0xE0 : c;
-#else /* OS2 */
 	char c;
 	int n;
 
@@ -168,33 +163,25 @@ x_getc()
 	if (n != 1)
 		return -1;
 	return (int) (unsigned char) c;
-#endif /* OS2 */
 }
 
-void
-x_flush()
+void x_flush()
 {
 	shf_flush(shl_out);
 }
 
-void
-x_putc(c)
-	int c;
+void x_putc(int c)
 {
 	shf_putc(c, shl_out);
 }
 
-void
-x_puts(s)
-	const char *s;
+void x_puts(const char *s)
 {
 	while (*s != 0)
 		shf_putc(*s++, shl_out);
 }
 
-bool_t
-x_mode(onoff)
-	bool_t	onoff;
+bool_t x_mode(bool_t onoff)
 {
 	static bool_t	x_cur_mode;
 	bool_t		prev;
@@ -326,10 +313,7 @@ x_mode(onoff)
  * RETURN VALUE:
  *      length
  */
-int
-promptlen(cp, spp)
-    const char  *cp;
-    const char **spp;
+int promptlen(const char *cp, const char **spp)
 {
     int count = 0;
     const char *sp = cp;
@@ -368,9 +352,7 @@ promptlen(cp, spp)
     return count;
 }
 
-void
-set_editmode(ed)
-	const char *ed;
+void set_editmode(const char *ed)
 {
 	static const enum sh_flag edit_flags[] = {
 #ifdef EMACS
@@ -403,11 +385,7 @@ set_editmode(ed)
  * If successful, *lenp contains the new length.  Note: cursor should be
  * moved to the start of the line after (un)commenting.
  */
-int
-x_do_comment(buf, bsize, lenp)
-	char *buf;
-	int bsize;
-	int *lenp;
+int x_do_comment(char *buf, int bsize, int *lenp)
 {
 	int i, j;
 	int len = *lenp;
@@ -486,11 +464,7 @@ x_complete_word(str, slen, is_command, nwordsp, ret)
 }
 #endif /* 0 */
 
-void
-x_print_expansions(nwords, words, is_command)
-	int nwords;
-	char *const *words;
-	int is_command;
+void x_print_expansions(int nwords, char *const *words, int is_command)
 {
 	int use_copy = 0;
 	int prefix_len;
