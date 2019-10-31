@@ -69,36 +69,7 @@ extern int setpgrp (void);
 # endif /* SYSV_PGRP */
 #endif /* HAVE_UNISTD_H */
 
-#ifdef HAVE_STRING_H
-# include <string.h>
-#else
-# include <strings.h>
-# define strchr index
-# define strrchr rindex
-#endif /* HAVE_STRING_H */
-#ifndef HAVE_STRSTR
-char *strstr (const char *s, const char *p);
-#endif /* HAVE_STRSTR */
-#ifndef HAVE_STRCASECMP
-int strcasecmp (const char *s1, const char *s2);
-int strncasecmp (const char *s1, const char *s2, int n);
-#endif /* HAVE_STRCASECMP */
-
-#ifdef HAVE_MEMORY_H
-# include <memory.h>
-#endif
-#ifndef HAVE_MEMSET
-# define memcpy(d, s, n)	bcopy(s, d, n)
-# define memcmp(s1, s2, n)	bcmp(s1, s2, n)
-void *memset (void *d, int c, size_t n);
-#endif /* HAVE_MEMSET */
-#ifndef HAVE_MEMMOVE
-# ifdef HAVE_BCOPY
-#  define memmove(d, s, n)	bcopy(s, d, n)
-# else
-void *memmove (void *d, const void *s, size_t n);
-# endif
-#endif /* HAVE_MEMMOVE */
+#include <string.h>
 
 #include <errno.h>
 extern int errno;

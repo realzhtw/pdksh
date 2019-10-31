@@ -5,16 +5,8 @@
 #include <sys/types.h>
 #include <signal.h>
 #include <errno.h>
-#ifdef HAVE_STRING_H
-# include <string.h>
-#else
-# include <strings.h>
-# define strchr index
-# define strrchr rindex
-#endif /* HAVE_STRING_H */
-#ifdef HAVE_STDLIB_H
-# include <stdlib.h>
-#endif /* HAVE_STDLIB_H */
+include <string.h>
+#include <stdlib.h>
 #ifdef HAVE_UNISTD_H
 # include <unistd.h>
 #endif /* HAVE_UNISTD_H */

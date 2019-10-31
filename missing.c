@@ -6,50 +6,6 @@
 #include "ksh_stat.h"
 #include "ksh_dir.h"
 
-
-#ifndef HAVE_MEMSET
-void *
-memset(d, c, n)
-	void *d;
-	int c;
-	size_t n;
-{
-	unsigned char *p = (unsigned char *) d;
-
-	/* Not amazingly fast.. */
-	for (; n > 0; --n)
-		*p++ = c;
-	return d;
-}
-#endif /* !HAVE_MEMSET */
-
-#if !defined(HAVE_MEMMOVE) && !defined(HAVE_BCOPY)
-void *
-memmove(d, s, n)
-	void *d;
-	const void *s;
-	size_t n;
-{
-	char *dp = (char *) d, *sp = (char *) s;
-
-	if (n <= 0)
-		;
-	else if (dp < sp)
-		do
-			*dp++ = *sp++;
-		while (--n > 0);
-	else if (dp > sp) {
-		dp += n;
-		sp += n;
-		do
-			*--dp = *--sp;
-		while (--n > 0);
-	}
-	return d;
-}
-#endif /* !HAVE_MEMMOVE && !HAVE_BCOPY */
-
-
 #ifndef HAVE_STRCASECMP
 /*
  * Case insensitive string compare routines, same semantics as str[n]cmp()
@@ -121,25 +77,6 @@ strncasecmp(s1, s2, n)
 	return n < 0 ? 0 : ichars[*us1] - ichars[*--us2];
 }
 #endif /* HAVE_STRCASECMP */
-
-
-#ifndef HAVE_STRSTR
-char *
-strstr(s, p)
-	const char *s;
-	const char *p;
-{
-	int len;
-
-	if (s && p)
-		for (len = strlen(p); *s; s++)
-			if (*s == *p && strncmp(s, p, len) == 0)
-				return (char *) s;
-
-	return 0;
-}
-#endif /* HAVE_STRSTR */
-
 
 #ifndef HAVE_STRERROR
 char *
