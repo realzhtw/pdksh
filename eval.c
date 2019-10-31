@@ -1031,17 +1031,8 @@ globit(xs, xpp, sp, wp, check)
 				*xp = '\0';
 			}
 		}
-#ifdef OS2 /* Done this way to avoid bug in gcc 2.7.2... */
-    /* Ugly kludge required for command
-     * completion - see how search_access()
-     * is implemented for OS/2...
-     */
-# define KLUDGE_VAL	4
-#else /* OS2 */
-# define KLUDGE_VAL	0
-#endif /* OS2 */
-		XPput(*wp, str_nsave(Xstring(*xs, xp), Xlength(*xs, xp)
-			+ KLUDGE_VAL, ATEMP));
+		XPput(*wp, str_nsave(Xstring(*xs, xp), Xlength(*xs, xp), ATEMP));
+
 		return;
 	}
 
@@ -1158,10 +1149,7 @@ copy_non_glob(xs, xpp, p)
 #endif /* 0 */
 
 /* remove MAGIC from string */
-char *
-debunk(dp, sp)
-	char *dp;
-	const char *sp;
+char *debunk(char *dp, const char *sp)
 {
 	char *d, *s;
 
@@ -1187,12 +1175,7 @@ debunk(dp, sp)
  * puts the expanded version in *dcp,dp and returns a pointer in p just
  * past the name, otherwise returns 0.
  */
-static char *
-maybe_expand_tilde(p, dsp, dpp, isassign)
-	char *p;
-	XString *dsp;
-	char **dpp;
-	int isassign;
+static char *maybe_expand_tilde(char *p, XString *dsp, char **dpp, int isassign)
 {
 	XString ts;
 	char *dp = *dpp;
@@ -1229,9 +1212,7 @@ maybe_expand_tilde(p, dsp, dpp, isassign)
  * based on a version by Arnold Robbins
  */
 
-static char *
-tilde(cp)
-	char *cp;
+static char *tilde(char *cp)
 {
 	char *dp;
 
@@ -1256,18 +1237,12 @@ tilde(cp)
  * we might consider our own version of getpwnam() to keep the size down.
  */
 
-static char *
-homedir(name)
-	char *name;
+static char *homedir(char *name)
 {
 	struct tbl *ap;
 
 	ap = tenter(&homedirs, name, hash(name));
 	if (!(ap->flag & ISSET)) {
-#ifdef OS2
-		/* No usernames in OS2 - punt */
-		return NULL;
-#else /* OS2 */
 		struct passwd *pw;
 
 		pw = getpwnam(name);
@@ -1275,18 +1250,12 @@ homedir(name)
 			return NULL;
 		ap->val.s = str_save(pw->pw_dir, APERM);
 		ap->flag |= DEFINED|ISSET|ALLOC;
-#endif /* OS2 */
 	}
 	return ap->val.s;
 }
 
 #ifdef BRACE_EXPAND
-static void
-alt_expand(wp, start, exp_start, end, fdo)
-	XPtrV *wp;
-	char *start, *exp_start;
-	char *end;
-	int fdo;
+static void alt_expand(XPtrV *wp, char *start, char *exp_start, char *end, int fdo)
 {
 	int UNINITIALIZED(count);
 	char *brace_start, *brace_end, *UNINITIALIZED(comma);
