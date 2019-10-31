@@ -1083,9 +1083,7 @@ c_let(wp)
 }
 #endif /* KSH */
 
-int
-c_jobs(wp)
-	char **wp;
+int c_jobs(char **wp)
 {
 	int optc;
 	int flag = 0;
@@ -1121,9 +1119,7 @@ c_jobs(wp)
 }
 
 #ifdef JOBS
-int
-c_fgbg(wp)
-	char **wp;
+int c_fgbg(char **wp)
 {
 	int bg = strcmp(*wp, "bg") == 0;
 	int UNINITIALIZED(rv);

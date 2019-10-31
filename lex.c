@@ -95,9 +95,7 @@ static int ignore_backslash_newline;
  * hence the state stack.
  */
 
-int
-yylex(cf)
-	int cf;
+int yylex(int cf)
 {
 	Lex_state states[STATE_BSIZE], *statep;
 	State_info state_info;
@@ -646,11 +644,12 @@ Done:
 		if (c == c2 || (c == '<' && c2 == '>')) {
 			iop->flag = c == c2 ?
 				  (c == '>' ? IOCAT : IOHERE) : IORDWR;
-			if (iop->flag == IOHERE)
+			if (iop->flag == IOHERE) {
 				if ((c2 = getsc()) == '-')
 					iop->flag |= IOSKIP;
 				else
 					ungetsc(c2);
+			}
 		} else if (c2 == '&')
 			iop->flag = IODUP | (c == '<' ? IORDUP : 0);
 		else {

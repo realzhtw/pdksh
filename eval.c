@@ -143,11 +143,10 @@ typedef struct SubType {
 	struct SubType *next;	/* poped type (to avoid re-allocating) */
 } SubType;
 
-void
-expand(cp, wp, f)
-	char *cp;		/* input word */
-	XPtrV *wp;	/* output words */
-	int f;			/* DO* flags */
+void expand(char *cp, XPtrV *wp, int f)
+	/* cp input word   */
+	/* wp output words */
+	/* f  * DO* flags  */
 {
 	int UNINITIALIZED(c);
 	int type;	/* expansion type */
@@ -702,13 +701,13 @@ varsub(xp, sp, word, stypep, slenp)
 		/* Check for size of array */
 		if ((p=strchr(sp,'[')) && (p[1]=='*'||p[1]=='@') && p[2]==']') {
 			int n = 0;
-			int max = 0;
+			/* int max = 0; */
 			vp = global(arrayname(sp));
 			if (vp->flag & (ISSET|ARRAY))
 				zero_ok = 1;
 			for (; vp; vp = vp->u.array)
 				if (vp->flag & ISSET) {
-					max = vp->index + 1;
+					/* max = vp->index + 1; */
 					n++;
 				}
 			c = n; /* ksh88/ksh93 go for number, not max index */
