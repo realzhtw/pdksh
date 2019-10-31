@@ -63,11 +63,12 @@ popblock()
 
 	e->loc = l->next;	/* pop block */
 	for (i = l->vars.size; --i >= 0; )
-		if ((vp = *vpp++) != NULL && (vp->flag&SPECIAL))
+		if ((vp = *vpp++) != NULL && (vp->flag&SPECIAL)) {
 			if ((vq = global(vp->name))->flag & ISSET)
 				setspec(vq);
 			else
 				unsetspec(vq);
+		}
 	if (l->flags & BF_DOGETOPTS)
 		user_opt = l->getopts_state;
 	afreeall(&l->area);
@@ -217,11 +218,12 @@ global(n)
 	}
 	for (l = e->loc; ; l = l->next) {
 		vp = tsearch(&l->vars, n, h);
-		if (vp != NULL)
+		if (vp != NULL) {
 			if (array)
 				return arraysearch(vp, val);
 			else
 				return vp;
+		}
 		if (l->next == NULL)
 			break;
 	}
@@ -332,9 +334,7 @@ str_val(vp)
 }
 
 /* get variable integer value, with error checking */
-long
-intval(vp)
-	struct tbl *vp;
+long intval(struct tbl *vp)
 {
 	long num;
 	int base;
@@ -347,11 +347,7 @@ intval(vp)
 }
 
 /* set variable to string value */
-int
-setstr(vq, s, error_ok)
-	struct tbl *vq;
-	const char *s;
-	int error_ok;
+int setstr(struct tbl *vq, const char *s, int error_ok)
 {
 	if (vq->flag & RDONLY) {
 		warningf(TRUE, "%s: is read only", vq->name);
@@ -390,10 +386,7 @@ setstr(vq, s, error_ok)
 }
 
 /* set variable to integer */
-void
-setint(vq, n)
-	struct tbl *vq;
-	long n;
+void setint(struct tbl *vq, long n)
 {
 	if (!(vq->flag&INTEGER)) {
 		struct tbl *vp = &vtemp;

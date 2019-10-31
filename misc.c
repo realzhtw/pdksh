@@ -1280,10 +1280,7 @@ reset_nonblock(fd)
 #endif /* HPUX_GETWD_BUG */
 
 /* Like getcwd(), except bsize is ignored if buf is 0 (MAXPATHLEN is used) */
-char *
-ksh_get_wd(buf, bsize)
-	char *buf;
-	int bsize;
+char *ksh_get_wd(char *buf, int bsize)
 {
 #ifdef HAVE_GETCWD
 	char *b;

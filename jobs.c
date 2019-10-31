@@ -1495,11 +1495,7 @@ check_job(j)
  *
  * If jobs are compiled in then this routine expects sigchld to be blocked.
  */
-static void
-j_print(j, how, shf)
-	Job		*j;
-	int		how;
-	struct shf	*shf;
+static void j_print(Job *j, int how, struct shf *shf)
 {
 	Proc	*p;
 	int	state;
