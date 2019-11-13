@@ -6,13 +6,7 @@
 #include "ksh_stat.h"
 #include <ctype.h>
 
-#ifdef __CYGWIN__
-#include <sys/cygwin.h>
-#endif /* __CYGWIN__ */
-
-int
-c_cd(wp)
-	char	**wp;
+int c_cd(char **wp)
 {
 	int optc;
 	int physical = Flag(FPHYSICAL);
@@ -144,12 +138,7 @@ c_cd(wp)
 
 	/* Set PWD */
 	if (pwd) {
-#ifdef __CYGWIN__
-		char ptmp[PATH];  /* larger than MAX_PATH */
-		cygwin_conv_to_full_posix_path(pwd, ptmp);
-#else /* __CYGWIN__ */
 		char *ptmp = pwd;
-#endif /* __CYGWIN__ */
 		set_current_wd(ptmp);
 		/* Ignore failure (happens if readonly or integer) */
 		setstr(pwd_s, ptmp, KSH_RETURN_ERROR);
