@@ -61,11 +61,7 @@ strcasecmp(s1, s2)
 	return ichars[*us1] - ichars[*--us2];
 }
 
-int
-strncasecmp(s1, s2, n)
-	const char *s1;
-	const char *s2;
-	int n;
+int strncasecmp(const char *s1, const char *s2, int n)
 {
 	const unsigned char *us1 = (const unsigned char *) s1;
 	const unsigned char *us2 = (const unsigned char *) s2;
@@ -92,7 +88,6 @@ clock_t ksh_times(struct tms *tms)
 	static clock_t base_sec;
 	clock_t rv;
 
-# ifdef HAVE_GETRUSAGE
 	{
 		struct timeval tv;
 		struct rusage ru;
@@ -115,22 +110,6 @@ clock_t ksh_times(struct tms *tms)
 		rv = (tv.tv_sec - base_sec) * CLK_TCK;
 		rv += tv.tv_usec * CLK_TCK / 1000000;
 	}
-# else /* HAVE_GETRUSAGE */
-	/* Assume times() available, but always returns 0
-	 * (also assumes ftime() available)
-	 */
-	{
-		struct timeb tb;
-
-		if (times(tms) == (clock_t) -1)
-			return (clock_t) -1;
-		ftime(&tb);
-		if (base_sec == 0)
-			base_sec = tb.time;
-		rv = (tb.time - base_sec) * CLK_TCK;
-		rv += tb.millitm * CLK_TCK / 1000;
-	}
-# endif /* HAVE_GETRUSAGE */
 	return rv;
 }
 #endif /* TIMES_BROKEN */
