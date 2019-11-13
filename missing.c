@@ -78,54 +78,6 @@ strncasecmp(s1, s2, n)
 }
 #endif /* HAVE_STRCASECMP */
 
-#ifndef HAVE_STRERROR
-char *
-strerror(err)
-	int err;
-{
-	static char	buf[64];
-# ifdef HAVE_SYS_ERRLIST
-#  ifndef SYS_ERRLIST_DECLARED
-	extern int	sys_nerr;
-	extern char	*sys_errlist[];
-#  endif
-	char		*p;
-
-	if (err < 0 || err >= sys_nerr)
-		shf_snprintf(p = buf, sizeof(buf), "Unknown system error %d",
-			err);
-	else
-		p = sys_errlist[err];
-	return p;
-# else /* HAVE_SYS_ERRLIST */
-	switch (err) {
-	  case EINVAL:
-		return "Invalid argument";
-	  case EACCES:
-		return "Permission denied";
-	  case ESRCH:
-		return "No such process";
-	  case EPERM:
-		return "Not owner";
-	  case ENOENT:
-		return "No such file or directory";
-	  case ENOTDIR:
-		return "Not a directory";
-	  case ENOEXEC:
-		return "Exec format error";
-	  case ENOMEM:
-		return "Not enough memory";
-	  case E2BIG:
-		return "Argument list too long";
-	  default:
-		shf_snprintf(buf, sizeof(buf), "Unknown system error %d", err);
-		return buf;
-	}
-# endif /* HAVE_SYS_ERRLIST */
-}
-#endif /* !HAVE_STRERROR */
-
-
 #ifdef TIMES_BROKEN
 # include "ksh_time.h"
 # include "ksh_times.h"
