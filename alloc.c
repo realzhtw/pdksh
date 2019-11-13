@@ -155,10 +155,7 @@ void afreeall(Area *ap)
 }
 
 /* allocate object from Area */
-void *
-alloc(size, ap)
-	size_t size;
-	Area *ap;
+void *alloc(size_t size, Area *ap)
 {
 	int cells, acells;
 	Block *bp = 0;
@@ -393,10 +390,7 @@ aresize(ptr, size, ap)
 	return ptr;
 }
 
-void
-afree(ptr, ap)
-	void *ptr;
-	Area *ap;
+void afree(void *ptr, Area *ap)
 {
 	Block *bp;
 	Cell *fp, *fpp;
@@ -453,10 +447,7 @@ afree(ptr, ap)
 	ACHECK(ap);
 }
 
-static void
-ablockfree(bp, ap)
-	Block *bp;
-	Area *ap;
+static void ablockfree(Block *bp, Area *ap)
 {
 	/* NOTE: If this code changes, similar changes may be
 	 * needed in alloc() (where realloc fails).
@@ -474,9 +465,7 @@ ablockfree(bp, ap)
 }
 
 # if DEBUG_ALLOC
-void
-acheck(ap)
-	Area *ap;
+void acheck(Area *ap)
 {
 	Block *bp, *bpp;
 	Cell *dp, *dptmp, *fp;
@@ -571,11 +560,7 @@ acheck(ap)
 	}
 }
 
-void
-aprint(ap, ptr, size)
-	Area *ap;
-	void *ptr;
-	size_t size;
+void aprint(Area *ap, void *ptr, size_t size)
 {
 	Block *bp;
 
@@ -668,8 +653,7 @@ aprint(ap, ptr, size)
 Area a;
 FILE *myout;
 
-int
-main(int argc, char **argv)
+int main(int argc, char **argv)
 {
 	char buf[1024];
 	struct info {

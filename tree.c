@@ -466,10 +466,7 @@ vfptreef(shf, indent, fmt, va)
  * copy tree (for function definition)
  */
 
-struct op *
-tcopy(t, ap)
-	struct op *t;
-	Area *ap;
+struct op *tcopy(struct op *t, Area *ap)
 {
 	struct op *r;
 	char **tw, **rw;
@@ -653,10 +650,7 @@ wdstrip(wp)
 		}
 }
 
-static	struct ioword **
-iocopy(iow, ap)
-	struct ioword **iow;
-	Area *ap;
+static struct ioword **iocopy(struct ioword **iow, Area *ap)
 {
 	struct ioword **ior;
 	int i;

@@ -926,11 +926,7 @@ trimsub(str, pat, how)
  */
 
 /* XXX cp not const 'cause slashes are temporarily replaced with nulls... */
-static void
-glob(cp, wp, markdirs)
-	char *cp;
-	XPtrV *wp;
-	int markdirs;
+static void glob(char *cp, XPtrV *wp, int markdirs)
 {
 	int oldsize = XPsize(*wp);
 
@@ -949,11 +945,7 @@ glob(cp, wp, markdirs)
 /* Apply file globbing to cp and store the matching files in wp.  Returns
  * the number of matches found.
  */
-int
-glob_str(cp, wp, markdirs)
-	char *cp;
-	XPtrV *wp;
-	int markdirs;
+int glob_str(char *cp, XPtrV *wp, int markdirs)
 {
 	int oldsize = XPsize(*wp);
 	XString xs;

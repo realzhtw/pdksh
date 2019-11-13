@@ -19,11 +19,7 @@ unsigned int hash(const char *n)
 	return h * 32821;	/* scatter bits */
 }
 
-void
-tinit(tp, ap, tsize)
-	struct table *tp;
-	Area *ap;
-	int tsize;
+void tinit(struct table *tp, Area *ap, int tsize)
 {
 	tp->areap = ap;
 	tp->tbls = NULL;
@@ -32,10 +28,7 @@ tinit(tp, ap, tsize)
 		texpand(tp, tsize);
 }
 
-static void
-texpand(tp, nsize)
-	struct table *tp;
-	int nsize;
+static void texpand(struct table *tp, int nsize)
 {
 	int i;
 	struct tbl *tblp, **p;
@@ -66,11 +59,10 @@ texpand(tp, nsize)
 	afree((void*)otblp, tp->areap);
 }
 
-struct tbl *
-tsearch(tp, n, h)
-	struct table *tp;	/* table */
-	const char *n;		/* name to enter */
-	unsigned int h;			/* hash(n) */
+struct tbl *tsearch(struct table *tp,const char *n, unsigned h)
+	/* tp - table         */
+	/* n  - name to enter */
+	/* h  - hash(n)       */
 {
 	struct tbl **pp, *p;
 
@@ -89,8 +81,7 @@ tsearch(tp, n, h)
 	return NULL;
 }
 
-struct tbl *
-tenter(tp, n, h)
+struct tbl *tenter(tp, n, h)
 	struct table *tp;	/* table */
 	const char *n;		/* name to enter */
 	unsigned int h;			/* hash(n) */
@@ -136,18 +127,13 @@ void tdelete(struct tbl *p)
 	p->flag = 0;
 }
 
-void
-twalk(ts, tp)
-	struct tstate *ts;
-	struct table *tp;
+void twalk(struct tstate *ts, struct table *tp)
 {
 	ts->left = tp->size;
 	ts->next = tp->tbls;
 }
 
-struct tbl *
-tnext(ts)
-	struct tstate *ts;
+struct tbl *tnext(struct tstate *ts)
 {
 	while (--ts->left >= 0) {
 		struct tbl *p = *ts->next++;
@@ -157,16 +143,12 @@ tnext(ts)
 	return NULL;
 }
 
-static int
-tnamecmp(p1, p2)
-	void *p1, *p2;
+static int tnamecmp(void *p1, void *p2)
 {
 	return strcmp(((struct tbl *)p1)->name, ((struct tbl *)p2)->name);
 }
 
-struct tbl **
-tsort(tp)
-	struct table *tp;
+struct tbl **tsort(struct table *tp)
 {
 	int i;
 	struct tbl **p, **sp, **dp;
@@ -188,9 +170,7 @@ tsort(tp)
 
 void tprintinfo (struct table *tp);
 
-void
-tprintinfo(tp)
-	struct table *tp;
+void tprintinfo(struct table *tp)
 {
 	struct tbl *te;
 	char *n;

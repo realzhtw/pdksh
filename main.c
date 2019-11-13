@@ -764,8 +764,7 @@ cleanup_proc_env()
 }
 
 /* remove temp files and free ATEMP Area */
-static void
-reclaim()
+static void reclaim()
 {
 	remove_temps(e->temps);
 	e->temps = NULL;
@@ -830,10 +829,7 @@ is_restricted(name)
 	return (p = strchr(name, 'r')) && strstr(p, "sh");
 }
 
-void
-aerror(ap, msg)
-	Area *ap;
-	const char *msg;
+void aerror(Area *ap, const char *msg)
 {
 	internal_errorf(1, "alloc: %s", msg);
 	errorf(null); /* this is never executed - keeps gcc quiet */
