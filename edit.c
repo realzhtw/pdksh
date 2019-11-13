@@ -131,7 +131,7 @@ x_read(buf, len)
 		check_sigwinch();
 #endif /* TIOCGWINSZ */
 
-	x_mode(TRUE);
+	x_mode(true);
 #ifdef EMACS
 	if (Flag(FEMACS) || Flag(FGMACS))
 		i = x_emacs(buf, len);
@@ -143,7 +143,7 @@ x_read(buf, len)
 	else
 #endif
 		i = -1;		/* internal error */
-	x_mode(FALSE);
+	x_mode(false);
 	return i;
 }
 
@@ -156,9 +156,9 @@ int x_getc()
 
 	while ((n = blocking_read(0, &c, 1)) < 0 && errno == EINTR)
 		if (trap) {
-			x_mode(FALSE);
+			x_mode(false);
 			runtraps(0);
-			x_mode(TRUE);
+			x_mode(true);
 		}
 	if (n != 1)
 		return -1;
@@ -181,10 +181,10 @@ void x_puts(const char *s)
 		shf_putc(*s++, shl_out);
 }
 
-bool_t x_mode(bool_t onoff)
+bool x_mode(bool onoff)
 {
-	static bool_t	x_cur_mode;
-	bool_t		prev;
+	static bool	x_cur_mode;
+	bool		prev;
 
 	if (x_cur_mode == onoff)
 		return x_cur_mode;
@@ -803,7 +803,7 @@ add_glob(str, slen)
 {
 	char *toglob;
 	char *s;
-	bool_t saw_slash = FALSE;
+	bool saw_slash = false;
 
 	if (slen < 0)
 		return (char *) 0;
@@ -824,7 +824,7 @@ add_glob(str, slen)
 			 || (s[1] == '(' /*)*/ && strchr("*+?@!", *s)))
 			break;
 		else if (ISDIRSEP(*s))
-			saw_slash = TRUE;
+			saw_slash = true;
 	}
 	if (!*s && (*toglob != '~' || saw_slash)) {
 		toglob[slen] = '*';
@@ -921,7 +921,7 @@ glob_table(pat, wp, tp)
 	struct tbl *te;
 
 	for (twalk(&ts, tp); (te = tnext(&ts)); ) {
-		if (gmatch(te->name, pat, FALSE))
+		if (gmatch(te->name, pat, false))
 			XPput(*wp, str_save(te->name, ATEMP));
 	}
 }

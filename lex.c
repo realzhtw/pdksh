@@ -161,7 +161,7 @@ int yylex(int cf)
 		  case SBASE:
 			if (c == '[' && (cf & (VARASN|ARRAYVAR))) {
 				*wp = EOS; /* temporary */
-				if (is_wdvarname(Xstring(ws, wp), FALSE))
+				if (is_wdvarname(Xstring(ws, wp), false))
 				{
 					char *p, *tmp;
 
@@ -845,7 +845,7 @@ void yyerror(const char *fmt, ...)
 		source = source->next;
 	source->str = null;	/* zap pending input */
 
-	error_prefix(TRUE);
+	error_prefix(true);
 	va_start(va, fmt);
 	shf_vfprintf(shl_out, fmt, va);
 	va_end(va);

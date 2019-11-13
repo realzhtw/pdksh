@@ -217,7 +217,7 @@ x_vi(buf, len)
 				x_vi_zotc(c);
 				x_flush();
 				trapsig(c == edchars.intr ? SIGINT : SIGQUIT);
-				x_mode(FALSE);
+				x_mode(false);
 				unwind(LSHELL);
 			} else if (c == edchars.eof && state != VVERSION) {
 				if (es->linelen == 0) {

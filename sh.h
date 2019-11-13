@@ -238,24 +238,14 @@ extern int dup2 (int, int);
 #define DIRSEP         '/'
 #define DIRSEPSTR      "/"
 #define ISDIRSEP(c)    ((c) == '/')
-#ifdef __CYGWIN__
-#  define ISABSPATH(s) \
-       (((s)[0] && (s)[1] == ':' && ISDIRSEP((s)[2])) || ISDIRSEP((s)[0]))
-#  define ISRELPATH(s) (!(s)[0] || ((s)[1] != ':' && !ISDIRSEP((s)[0])))
-#else /* __CYGWIN__ */
-# define ISABSPATH(s)	ISDIRSEP((s)[0])
-# define ISRELPATH(s)	(!ISABSPATH(s))
-#endif /* __CYGWIN__ */
+#define ISABSPATH(s)	ISDIRSEP((s)[0])
+#define ISRELPATH(s)	(!ISABSPATH(s))
 #define ISROOTEDPATH(s) ISABSPATH(s)
 #define FILECHCONV(c)	c
 #define FILECMP(s1, s2) strcmp(s1, s2)
 #define FILENCMP(s1, s2, n) strncmp(s1, s2, n)
 #define ksh_strchr_dirsep(p)   strchr(p, DIRSEP)
 #define ksh_strrchr_dirsep(p)  strrchr(p, DIRSEP)
-
-typedef int bool_t;
-#define	FALSE	0
-#define	TRUE	1
 
 #define	NELEM(a) (sizeof(a) / sizeof((a)[0]))
 #define	sizeofN(type, n) (sizeof(type) * (n))

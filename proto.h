@@ -4,6 +4,8 @@
  * $Id: proto.h,v 1.3 1994/05/19 18:32:40 michael Exp michael $
  */
 
+#include <stdbool.h>
+
 /* alloc.c */
 Area *	ainit		(Area *ap);
 void 	afreeall	(Area *ap);
@@ -254,7 +256,7 @@ void 	newblock	(void);
 void 	popblock	(void);
 void	initvar		(void);
 struct tbl *	global	(const char *n);
-struct tbl *	local	(const char *n, bool_t copy);
+struct tbl *	local	(const char *n, bool copy);
 char *	str_val		(struct tbl *vp);
 long 	intval		(struct tbl *vp);
 int 	setstr		(struct tbl *vq, const char *s, int error_ok);

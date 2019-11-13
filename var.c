@@ -123,23 +123,19 @@ initvar()
  * non-zero if this is an array, sets *valp to the array index, returns
  * the basename of the array.
  */
-const char *
-array_index_calc(n, arrayp, valp)
-	const char *n;
-	bool_t *arrayp;
-	int *valp;
+const char *array_index_calc(const char *n, bool *arrayp, int *valp)
 {
 	const char *p;
 	int len;
 
-	*arrayp = FALSE;
-	p = skip_varname(n, FALSE);
+	*arrayp = false;
+	p = skip_varname(n, false);
 	if (p != n && *p == '[' && (len = array_ref_len(p))) {
 		char *sub, *tmp;
 		long rval;
 
 		/* Calculate the value of the subscript */
-		*arrayp = TRUE;
+		*arrayp = true;
 		tmp = str_nsave(p+1, len-2, ATEMP);
 		sub = substitute(tmp, 0);
 		afree(tmp, ATEMP);
@@ -156,15 +152,13 @@ array_index_calc(n, arrayp, valp)
 /*
  * Search for variable, if not found create globally.
  */
-struct tbl *
-global(n)
-	const char *n;
+struct tbl *global(const char *n)
 {
 	struct block *l = e->loc;
 	struct tbl *vp;
 	int c;
 	unsigned h; 
-	bool_t	 array;
+	bool	 array;
 	int	 val;
 
 	/* Check to see if this is an array */
@@ -239,15 +233,12 @@ global(n)
 /*
  * Search for local variable, if not found create locally.
  */
-struct tbl *
-local(n, copy)
-	const char *n;
-	bool_t copy;
+struct tbl *local(const char *n, bool copy)
 {
 	struct block *l = e->loc;
 	struct tbl *vp;
 	unsigned h;
-	bool_t	 array;
+	bool	 array;
 	int	 val;
 
 	/* Check to see if this is an array */
@@ -350,7 +341,7 @@ long intval(struct tbl *vp)
 int setstr(struct tbl *vq, const char *s, int error_ok)
 {
 	if (vq->flag & RDONLY) {
-		warningf(TRUE, "%s: is read only", vq->name);
+		warningf(true, "%s: is read only", vq->name);
 		if (!error_ok)
 			errorf(null);
 		return 0;
@@ -360,7 +351,7 @@ int setstr(struct tbl *vq, const char *s, int error_ok)
 			/* debugging */
 			if (s >= vq->val.s
 			    && s <= vq->val.s + strlen(vq->val.s))
-				internal_errorf(TRUE,
+				internal_errorf(true,
 				    "setstr: %s=%s: assigning to self",
 				    vq->name, s);
 			afree((void*)vq->val.s, vq->areap);
@@ -574,11 +565,7 @@ export(vp, val)
  * set its attributes (INTEGER, RDONLY, EXPORT, TRACE, LJUST, RJUST, ZEROFIL,
  * LCASEV, UCASEV_AL), and optionally set its value if an assignment.
  */
-struct tbl *
-typeset(var, set, clr, field, base)
-	const char *var;
-	Tflag clr, set;
-	int field, base;
+struct tbl *typeset(const char *var, Tflag set, Tflag clr, int field, int base)
 {
 	struct tbl *vp;
 	struct tbl *vpbase, *t;
@@ -586,7 +573,7 @@ typeset(var, set, clr, field, base)
 	const char *val;
 
 	/* check for valid variable name, search for value */
-	val = skip_varname(var, FALSE);
+	val = skip_varname(var, false);
 	if (val == var)
 		return NULL;
 	if (*val == '[') {
@@ -625,7 +612,7 @@ typeset(var, set, clr, field, base)
 				  || strcmp(tvar, "SHELL") == 0))
 		errorf("%s: restricted", tvar);
 
-	vp = (set&LOCAL) ? local(tvar, (set & LOCAL_COPY) ? TRUE : FALSE)
+	vp = (set&LOCAL) ? local(tvar, (set & LOCAL_COPY) ? true : false)
 		: global(tvar);
 	set &= ~(LOCAL|LOCAL_COPY);
 
@@ -728,10 +715,7 @@ typeset(var, set, clr, field, base)
 /* Unset a variable.  array_ref is set if there was an array reference in
  * the name lookup (eg, x[2]).
  */
-void
-unset(vp, array_ref)
-	struct tbl *vp;
-	int array_ref;
+void unset(struct tbl *vp, int array_ref)
 {
 	if (vp->flag & ALLOC)
 		afree((void*)vp->val.s, vp->areap);
@@ -758,10 +742,7 @@ unset(vp, array_ref)
  * argument if there is no legal name, returns * a pointer to the terminating
  * null if whole string is legal).
  */
-char *
-skip_varname(s, aok)
-	const char *s;
-	int aok;
+char *skip_varname(const char *s, int aok)
 {
 	int alen;
 
@@ -775,10 +756,8 @@ skip_varname(s, aok)
 }
 
 /* Return a pointer to the first character past any legal variable name.  */
-char *
-skip_wdvarname(s, aok)
-	const char *s;
-	int aok;	/* skip array de-reference? */
+char *skip_wdvarname(const char *s, int aok)
+	/* aok - skip array de-reference? */
 {
 	if (s[0] == CHAR && letter(s[1])) {
 		do
@@ -808,10 +787,7 @@ skip_wdvarname(s, aok)
 }
 
 /* Check if coded string s is a variable name */
-int
-is_wdvarname(s, aok)
-	const char *s;
-	int aok;
+int is_wdvarname(const char *s, int aok)
 {
 	char *p = skip_wdvarname(s, aok);
 
@@ -819,11 +795,9 @@ is_wdvarname(s, aok)
 }
 
 /* Check if coded string s is a variable assignment */
-int
-is_wdvarassign(s)
-	const char *s;
+int is_wdvarassign(const char *s)
 {
-	char *p = skip_wdvarname(s, TRUE);
+	char *p = skip_wdvarname(s, true);
 
 	return p != s && p[0] == CHAR && p[1] == '=';
 }
@@ -831,8 +805,7 @@ is_wdvarassign(s)
 /*
  * Make the exported environment from the exported names in the dictionary.
  */
-char **
-makenv()
+char **makenv()
 {
 	struct block *l = e->loc;
 	XPtrV env;
@@ -873,8 +846,7 @@ makenv()
  * Done to ensure children will not get the same random number sequence
  * if the parent doesn't use $RANDOM.
  */
-void
-change_random()
+void change_random()
 {
     rand();
 }
@@ -884,9 +856,7 @@ change_random()
  */
 
 /* Test if name is a special parameter */
-static int
-special(name)
-	const char * name;
+static int special(const char *name)
 {
 	struct tbl *tp;
 
@@ -895,9 +865,7 @@ special(name)
 }
 
 /* Make a variable non-special */
-static void
-unspecial(name)
-	const char * name;
+static void unspecial(const char *name)
 {
 	struct tbl *tp;
 
@@ -911,9 +879,7 @@ static	time_t	seconds;		/* time SECONDS last set */
 #endif /* KSH */
 static	int	user_lineno;		/* what user set $LINENO to */
 
-static void
-getspec(vp)
-	struct tbl *vp;
+static void getspec(struct tbl *vp)
 {
 	switch (special(vp->name)) {
 #ifdef KSH
@@ -953,9 +919,7 @@ getspec(vp)
 	}
 }
 
-static void
-setspec(vp)
-	struct tbl *vp;
+static void setspec(struct tbl *vp)
 {
 	char *s;
 
@@ -1054,9 +1018,7 @@ setspec(vp)
 	}
 }
 
-static void
-unsetspec(vp)
-	struct tbl *vp;
+static void unsetspec(struct tbl *vp)
 {
 	switch (special(vp->name)) {
 	  case V_PATH:
@@ -1113,10 +1075,7 @@ unsetspec(vp)
  * Search for (and possibly create) a table entry starting with
  * vp, indexed by val.
  */
-static struct tbl *
-arraysearch(vp, val)
-	struct tbl *vp;
-	int val;
+static struct tbl *arraysearch(struct tbl *vp, int val)
 {
 	struct tbl *prev, *curr, *new;
 
@@ -1157,9 +1116,7 @@ arraysearch(vp, val)
  * to point to the open bracket.  Returns 0 if there is no matching closing
  * bracket.
  */
-int
-array_ref_len(cp)
-	const char *cp;
+int array_ref_len(const char *cp)
 {
 	const char *s = cp;
 	int c;
@@ -1176,9 +1133,7 @@ array_ref_len(cp)
 /*
  * Make a copy of the base of an array name
  */
-char *
-arrayname(str)
-	const char *str;
+char *arrayname(const char *str)
 {
 	const char *p;
 
@@ -1191,11 +1146,7 @@ arrayname(str)
 
 /* Set (or overwrite, if !reset) the array variable var to the values in vals.
  */
-void
-set_array(var, reset, vals)
-	const char *var;
-	int reset;
-	char **vals;
+void set_array(const char *var, int reset, char **vals)
 {
 	struct tbl *vp, *vq;
 	int i;

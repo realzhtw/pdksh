@@ -332,7 +332,7 @@ x_emacs(buf, len)
 	xbp = xbuf = buf; xend = buf + len;
 	xlp = xcp = xep = buf;
 	*xcp = 0;
-	xlp_valid = TRUE;
+	xlp_valid = true;
 	xmp = NULL;
 	x_curprefix = 0;
 	macroptr = (char *) 0;
@@ -381,7 +381,7 @@ x_emacs(buf, len)
 			return i;
 		  case KINTR:	/* special case for interrupt */
 			trapsig(SIGINT);
-			x_mode(FALSE);
+			x_mode(false);
 			unwind(LSHELL);
 		}
 	}
@@ -453,7 +453,7 @@ x_ins(s)
 	 * x_zots() may result in a call to x_adjust()
 	 * we want xcp to reflect the new position.
 	 */
-	xlp_valid = FALSE;
+	xlp_valid = false;
 	x_lastcp();
 	x_adj_ok = (xcp >= xlp);
 	x_zots(cp);
@@ -481,7 +481,7 @@ x_del_back(c)
 	if (x_arg > col)
 		x_arg = col;
 	x_goto(xcp - x_arg);
-	x_delete(x_arg, FALSE);
+	x_delete(x_arg, false);
 	return KSTD;
 }
 
@@ -497,7 +497,7 @@ x_del_char(c)
 	}
 	if (x_arg > nleft)
 		x_arg = nleft;
-	x_delete(x_arg, FALSE);
+	x_delete(x_arg, false);
 	return KSTD;
 }
 
@@ -552,7 +552,7 @@ x_delete(nc, force_push)
 	}
 	/*x_goto(xcp);*/
 	x_adj_ok = 1;
-	xlp_valid = FALSE;
+	xlp_valid = false;
 	for (cp = x_lastcp(); cp > xcp; )
 		x_bs(*--cp);
 
@@ -563,7 +563,7 @@ static int
 x_del_bword(c)
 	int c;
 {
-	x_delete(x_bword(), FALSE);
+	x_delete(x_bword(), false);
 	return KSTD;
 }
 
@@ -587,7 +587,7 @@ static int
 x_del_fword(c)
 	int c;
 {
-	x_delete(x_fword(), FALSE);
+	x_delete(x_fword(), false);
 	return KSTD;
 }
 
@@ -859,7 +859,7 @@ x_load_hist(hp)
 	(void)strcpy(xbuf, *hp);
 	xbp = xbuf;
 	xep = xcp = xbuf + strlen(*hp);
-	xlp_valid = FALSE;
+	xlp_valid = false;
 	if (xep > x_lastcp())
 	  x_goto(xep);
 	else
@@ -997,7 +997,7 @@ x_del_line(c)
 	xcp = xbuf;
 	x_push(i);
 	xlp = xbp = xep = xbuf;
-	xlp_valid = TRUE;
+	xlp_valid = true;
 	*xcp = 0;
 	xmp = NULL;
 	x_redraw(j);
@@ -1052,7 +1052,7 @@ x_redraw(limit)
 	  x_col = promptlen(prompt, (const char **) 0);
 	}
 	x_displen = xx_cols - 2 - x_col;
-	xlp_valid = FALSE;
+	xlp_valid = false;
 	cp = x_lastcp();
 	x_zots(xbp);
 	if (xbp != xbuf || xep > xlp)
@@ -1193,7 +1193,7 @@ x_kill(c)
 		x_goto(xbuf + x_arg);
 		ndel = -ndel;
 	}
-	x_delete(ndel, TRUE);
+	x_delete(ndel, true);
 	return KSTD;
 }
 
@@ -1239,7 +1239,7 @@ x_meta_yank(c)
 	}
 	len = strlen(killstack[killtp]);
 	x_goto(xcp - len);
-	x_delete(len, FALSE);
+	x_delete(len, false);
 	do {
 		if (killtp == 0)
 			killtp = KILLSIZE - 1;
@@ -1256,7 +1256,7 @@ x_abort(c)
 {
 	/* x_zotc(c); */
 	xlp = xep = xcp = xbp = xbuf;
-	xlp_valid = TRUE;
+	xlp_valid = true;
 	*xcp = 0;
 	return KINTR;
 }
@@ -1279,20 +1279,18 @@ x_stuffreset(c)
 #else
 	x_zotc(c);
 	xlp = xcp = xep = xbp = xbuf;
-	xlp_valid = TRUE;
+	xlp_valid = true;
 	*xcp = 0;
 	x_redraw(-1);
 	return KSTD;
 #endif
 }
 
-static int
-x_stuff(c)
-	int c;
+static int x_stuff(int c)
 {
 #if 0 || defined TIOCSTI
 	char	ch = c;
-	bool_t	savmode = x_mode(FALSE);
+	bool	savmode = x_mode(false);
 
 	(void)ioctl(TTY, TIOCSTI, &ch);
 	(void)x_mode(savmode);
@@ -1301,9 +1299,7 @@ x_stuff(c)
 	return KSTD;
 }
 
-static char *
-x_mapin(cp)
-	const char *cp;
+static char *x_mapin(const char *cp)
 {
 	char *new, *op;
 
@@ -1552,7 +1548,7 @@ x_kill_region(c)
 		xr = xmp;
 	}
 	x_goto(xr);
-	x_delete(rsize, TRUE);
+	x_delete(rsize, true);
 	xmp = xr;
 	return KSTD;
 }
@@ -1737,7 +1733,7 @@ x_expand(c)
 	}
 
 	x_goto(xbuf + start);
-	x_delete(end - start, FALSE);
+	x_delete(end - start, false);
 	for (i = 0; i < nwords; i++)
 		if (x_ins(words[i]) < 0 || (i < nwords - 1 && x_ins(space) < 0))
 		{
@@ -1827,7 +1823,7 @@ do_complete(flags, type)
 
 			if (nlen > 0) {
 				x_goto(xbuf + start);
-				x_delete(end - start, FALSE);
+				x_delete(end - start, false);
 				words[0][nlen] = '\0';
 				x_ins(words[0]);
 				/* If single match is not a directory, add a
@@ -1866,7 +1862,7 @@ x_adjust()
    */
   if ((xbp = xcp - (x_displen / 2)) < xbuf)
     xbp = xbuf;
-  xlp_valid = FALSE;
+  xlp_valid = false;
   x_redraw(xx_cols);
   x_flush();
 }
@@ -2194,7 +2190,7 @@ x_lastcp()
       i += x_size(*rcp);
     xlp = rcp;
   }
-  xlp_valid = TRUE;
+  xlp_valid = true;
   return (xlp);
 }
 

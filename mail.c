@@ -34,8 +34,7 @@ static void     munset      (mbox_t *mlist); /* free mlist and mval */
 static mbox_t * mballoc     (char *p, char *m); /* allocate a new mbox */
 static void     mprintit    (mbox_t *mbp);
 
-void
-mcheck()
+void mcheck()
 {
 	mbox_t	*mbp;
 	time_t		 now;
@@ -78,9 +77,7 @@ mcheck()
 	}
 }
 
-void
-mcset(interval)
-	long interval;
+void mcset(long interval)
 {
 	mailcheck_interval = interval;
 }
@@ -140,9 +137,7 @@ void mpset(char *mptoparse)
 	}
 }
 
-static void
-munset(mlist)
-mbox_t	*mlist;
+static void munset(mbox_t *mlist)
 {
 	mbox_t	*mbp;
 
@@ -155,10 +150,7 @@ mbox_t	*mlist;
 	}
 }
 
-static mbox_t *
-mballoc(p, m)
-	char	*p;
-	char	*m;
+static mbox_t *mballoc(char *p, char *m)
 {
 	struct stat	stbuf;
 	mbox_t	*mbp;
@@ -174,14 +166,12 @@ mballoc(p, m)
 	return(mbp);
 }
 
-static void
-mprintit( mbp )
-mbox_t	*mbp;
+static void mprintit(mbox_t *mbp)
 {
 	struct tbl	*vp;
 
 	/* Ignore setstr errors here (arbitrary) */
-	setstr((vp = local("_", FALSE)), mbp->mb_path, KSH_RETURN_ERROR);
+	setstr((vp = local("_", false)), mbp->mb_path, KSH_RETURN_ERROR);
 
 	shellf("%s\n", substitute(mbp->mb_msg ? mbp->mb_msg : MBMESSAGE, 0));
 
