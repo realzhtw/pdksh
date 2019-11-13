@@ -22,7 +22,6 @@
 /* Define to empty if the keyword does not work.  */
 #undef const
 
-
 /* Define to `int' if <sys/types.h> doesn't define.  */
 #undef gid_t
 
@@ -249,9 +248,6 @@
 
 /* Define if you have the getcwd function.  */
 #undef HAVE_GETCWD
-
-/* Define if you have the getgroups function.  */
-#undef HAVE_GETGROUPS
 
 /* Define if you have the getpagesize function.  */
 #undef HAVE_GETPAGESIZE

@@ -126,9 +126,7 @@ static void ablockfree (Block *bp, Area *ap);
 static void *asplit (Area *ap, Block *bp, Cell *fp, Cell *fpp, int cells);
 
 /* create empty Area */
-Area *
-ainit(ap)
-	Area *ap;
+Area *ainit(Area *ap)
 {
 	ap->freelist = &aempty;
 	ACHECK(ap);

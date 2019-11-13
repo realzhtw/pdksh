@@ -149,10 +149,6 @@ void simplify_path(char *path)
 
 	if ((isrooted = ISROOTEDPATH(path)))
 		very_start++;
-#if defined (OS2) || defined (__CYGWIN__)
-	if (path[0] && path[1] == ':')	/* skip a: */
-		very_start += 2;
-#endif /* OS2 || __CYGWIN__ */
 
 	/* Before			After
 	 *  /foo/			/foo
@@ -162,18 +158,7 @@ void simplify_path(char *path)
 	 *  ..				..
 	 *  ./foo			foo
 	 *  foo/../../../bar		../../bar
-	 * OS2 and CYGWIN:
-	 *  a:/foo/../..		a:/
-	 *  a:.				a:
-	 *  a:..			a:..
-	 *  a:foo/../../blah		a:../blah
 	 */
-
-#ifdef __CYGWIN__
-       /* preserve leading double-slash on pathnames (for UNC paths) */
-       if (path[0] && ISDIRSEP(path[0]) && path[1] && ISDIRSEP(path[1]))
-               very_start++;
-#endif /* __CYGWIN__ */
 
 	for (cur = t = start = very_start; ; ) {
 		/* treat multiple '/'s as one '/' */

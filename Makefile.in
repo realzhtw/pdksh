@@ -113,7 +113,7 @@ $(srcdir)/configure: configure.in aclocal.m4
 
 $(srcdir)/config.h.in: stamp-h.in
 $(srcdir)/stamp-h.in: configure.in aclocal.m4 acconfig.h
-	cd $(srcdir) && autoheader
+	cd $(srcdir) && autoheader-2.13
 	date > $(srcdir)/stamp-h.in
 
 config.h: stamp-h

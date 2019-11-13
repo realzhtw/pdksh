@@ -453,9 +453,7 @@ getint(vp, nump)
 /* convert variable vq to integer variable, setting its value from vp
  * (vq and vp may be the same)
  */
-struct tbl *
-setint_v(vq, vp)
-	struct tbl *vq, *vp;
+struct tbl *setint_v(struct tbl *vq, struct tbl *vp)
 {
 	int base;
 	long num;

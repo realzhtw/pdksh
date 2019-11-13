@@ -370,11 +370,7 @@ hist_replace(hp, pat, rep, global)
  * get pointer to history given pattern
  * pattern is a number or string
  */
-static char **
-hist_get(str, approx, allow_cur)
-	const char *str;
-	int approx;
-	int allow_cur;
+static char **hist_get(const char *str, int approx, int allow_cur)
 {
 	char **hp = (char **) 0;
 	int n;
@@ -414,9 +410,7 @@ hist_get(str, approx, allow_cur)
 }
 
 /* Return a pointer to the newest command in the history */
-static char **
-hist_get_newest(allow_cur)
-	int allow_cur;
+static char **hist_get_newest(int allow_cur)
 {
 	if (histptr < history || (!allow_cur && histptr == history)) {
 		bi_errorf("no history (yet)");
@@ -428,8 +422,7 @@ hist_get_newest(allow_cur)
 }
 
 /* Return a pointer to the newest command in the history */
-static char **
-hist_get_oldest()
+static char **hist_get_oldest()
 {
 	if (histptr <= history) {
 		bi_errorf("no history (yet)");
@@ -454,24 +447,18 @@ histbackup()
 	}
 }
 
-/*
- * Return the current position.
- */
-char **
-histpos()
+/* Return the current position. */
+char **histpos()
 {
 	return current;
 }
 
-int
-histN()
+int histN()
 {
 	return curpos;
 }
 
-int
-histnum(n)
-	int	n;
+int histnum(int n)
 {
 	int	last = histptr - history;
 
@@ -491,12 +478,7 @@ histnum(n)
  * searching from positions other than the end, and in either
  * direction.
  */
-int
-findhist(start, fwd, str, anchored)
-	int	start;
-	int	fwd;
-	const char  *str;
-	int	anchored;
+int findhist(int start, int fwd, const char *str, int anchored)
 {
 	char	**hp;
 	int	maxhist = histptr - history;
@@ -519,9 +501,7 @@ findhist(start, fwd, str, anchored)
  *	set history
  *	this means reallocating the dataspace
  */
-void
-sethistsize(n)
-	int n;
+void sethistsize(int n)
 {
 	if (n > 0 && n != histsize) {
 		int cursize = histptr - history;
@@ -598,8 +578,7 @@ init_histvec()
 /*
  * save command in history
  */
-void
-histsave(lno, cmd, dowrite)
+void histsave(lno, cmd, dowrite)
 	int lno;	/* ignored (compatibility with COMPLEX_HISTORY) */
 	const char *cmd;
 	int dowrite;	/* ignored (compatibility with COMPLEX_HISTORY) */
@@ -719,8 +698,7 @@ hist_init(s)
  * Handy for having all shells start with a useful history set.
  */
 
-void
-hist_finish()
+void hist_finish()
 {
   static int once;
   FILE *fh;
@@ -757,11 +735,7 @@ hist_finish()
 /*
  * save command in history
  */
-void
-histsave(lno, cmd, dowrite)
-	int lno;
-	const char *cmd;
-	int dowrite;
+void histsave(int lno, const char *cmd, int dowrite)
 {
 	char **hp;
 	char *c, *cp;

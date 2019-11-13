@@ -76,10 +76,7 @@ ulton(n, base)
 	return p;
 }
 
-char *
-str_save(s, ap)
-	const char *s;
-	Area *ap;
+char *str_save(const char *s, Area *ap)
 {
 	return s ? strcpy((char*) alloc((size_t)strlen(s)+1, ap), s) : NULL;
 }
@@ -306,12 +303,8 @@ change_flag(f, what, newval)
 #endif /* EDIT */
 	/* Turning off -p? */
 	if (f == FPRIVILEGED && oldval && !newval) {
-#ifdef OS2
-		;
-#else /* OS2 */
 		setuid(ksheuid = getuid());
 		setgid(getgid());
-#endif /* OS2 */
 	} else if (f == FPOSIX && newval) {
 #ifdef BRACE_EXPAND
 		Flag(FBRACEEXPAND) = 0
