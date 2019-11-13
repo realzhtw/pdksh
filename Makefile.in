@@ -109,7 +109,7 @@ info:
 dvi:
 
 $(srcdir)/configure: configure.in aclocal.m4
-	cd $(srcdir) && autoconf
+	cd $(srcdir) && autoconf-2.13
 
 $(srcdir)/config.h.in: stamp-h.in
 $(srcdir)/stamp-h.in: configure.in aclocal.m4 acconfig.h

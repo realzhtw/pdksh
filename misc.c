@@ -1263,7 +1263,7 @@ reset_nonblock(fd)
  */
 # define HPUX_GETWD_BUG_CODE \
 	{ \
-	    DIR *d = ksh_opendir("."); \
+	    DIR *d = opendir("."); \
 	    if (!d) \
 		return (char *) 0; \
 	    closedir(d); \

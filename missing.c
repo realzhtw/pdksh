@@ -135,9 +135,7 @@ strerror(err)
 #  include <sys/timeb.h>
 # endif /* HAVE_GETRUSAGE */
 
-clock_t
-ksh_times(tms)
-	struct tms *tms;
+clock_t ksh_times(struct tms *tms)
 {
 	static clock_t base_sec;
 	clock_t rv;
@@ -184,47 +182,3 @@ ksh_times(tms)
 	return rv;
 }
 #endif /* TIMES_BROKEN */
-
-#ifdef OPENDIR_DOES_NONDIR
-/* Prevent opendir() from attempting to open non-directories.  Such
- * behavior can cause problems if it attempts to open special devices...
- */
-DIR *
-ksh_opendir(d)
-	const char *d;
-{
-	struct stat statb;
-
-	if (stat(d, &statb) != 0)
-		return (DIR *) 0;
-	if (!S_ISDIR(statb.st_mode)) {
-		errno = ENOTDIR;
-		return (DIR *) 0;
-	}
-	return opendir(d);
-}
-#endif /* OPENDIR_DOES_NONDIR */
-
-#ifndef HAVE_DUP2
-int
-dup2(oldd, newd)
-	int oldd;
-	int newd;
-{
-	int old_errno;
-
-	if (fcntl(oldd, F_GETFL, 0) == -1)
-		return -1;	/* errno == EBADF */
-
-	if (oldd == newd)
-		return newd;
-
-	old_errno = errno;
-
-	close(newd);	/* in case its open */
-
-	errno = old_errno;
-
-	return fcntl(oldd, F_DUPFD, newd);
-}
-#endif /* !HAVE_MEMSET */

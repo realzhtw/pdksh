@@ -78,10 +78,7 @@ static const char *const initcoms [] = {
 	NULL
 };
 
-int
-main(argc, argv)
-	int argc;
-	char **argv;
+int main(int argc, char **argv)
 {
 	int i;
 	int argi;

@@ -177,24 +177,6 @@ typedef	RETSIGTYPE (*handler_t) (int);	/* signal handler */
 # define ksh_jmp_buf		jmp_buf
 #endif /* HAVE_SIGSETJMP */
 
-#ifndef HAVE_DUP2
-extern int dup2 (int, int);
-#endif /* !HAVE_DUP2 */
-
-/* Find a integer type that is at least 32 bits (or die) - SIZEOF_* defined
- * by autoconf (assumes an 8 bit byte, but I'm not concerned).
- * NOTE: INT32 may end up being more than 32 bits.
- */
-#if SIZEOF_INT >= 4
-# define INT32	int
-#else /* SIZEOF_INT */
-# if SIZEOF_LONG >= 4
-#  define INT32	long
-# else /* SIZEOF_LONG */
-   #error cannot find 32 bit type...
-# endif /* SIZEOF_LONG */
-#endif /* SIZEOF_INT */
-
 /* end of common headers */
 
 /* Stop gcc and lint from complaining about possibly uninitialized variables */
@@ -252,7 +234,7 @@ extern int dup2 (int, int);
 #define	BIT(i)	(1<<(i))	/* define bit in flag */
 
 /* Table flag type - needs > 16 and < 32 bits */
-typedef INT32 Tflag;
+typedef int Tflag;
 
 #define	NUFILE	10		/* Number of user-accessible files */
 #define	FDBASE	10		/* First file usable by Shell */
@@ -571,7 +553,7 @@ EXTERN Getopt user_opt;		/* parsing state for getopts builtin command */
 #ifdef KSH
 /* This for co-processes */
 
-typedef INT32 Coproc_id; /* something that won't (realisticly) wrap */
+typedef int Coproc_id; /* something that won't (realisticly) wrap */
 struct coproc {
 	int	read;		/* pipe from co-process's stdout */
 	int	readw;		/* other side of read (saved temporarily) */
